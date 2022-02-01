@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MoviesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,6 +15,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::get('movies', [MoviesController::class, 'showAll']);
+
+Route::get('movies/{id}', [MoviesController::class, 'showItem']);
+
+Route::post('movies', [MoviesController::class, 'createItem']);
+
+Route::put('movies/{id}', [MoviesController::class, 'updateItem']);
+
+Route::delete('movies/{id}', [MoviesController::class, 'deleteItem']);
+
+Route::fallback(function () {
+    return response()->json(['message'=>'not found'], 404);
 });
